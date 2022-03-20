@@ -16,9 +16,10 @@ class Output(Input):
 
 @step(deps={"secret_1": lambda di: "foo", "secret_2": lambda di: "bar"})
 def demo_injection(
-    data_in: Input, queue: IQueue, secret_1: str, secret_2: str
+    data_in: Input, queue: IQueue, secret_1: str, secret_2: str, env: CloudProvider
 ) -> Output:
     print("Dependency resolutions:")
+    print(f" - {env=}")
     print(f" - {queue=}")
     print(f" - {secret_1=}")
     print(f" - {secret_2=}")
