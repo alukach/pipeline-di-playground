@@ -1,5 +1,5 @@
 from dataclasses import field, dataclass
-from typing import Any, Callable, Generic, Mapping, Protocol, Type, TypeVar, Union
+from typing import Any, cast, Callable, Generic, Mapping, Type, TypeVar, Union
 
 from kink import inject, di
 from pydantic import BaseModel
@@ -42,9 +42,9 @@ def step(func=None, *args, **kwargs) -> Callable[..., Step]:
     Decorator to create Step object from func
     """
     # decorator not called as function, eg: @step
-    if func:
-        return Step(handler=func, *args, **kwargs)
-    
+    # if func:
+    #     return Step(handler=func, *args, **kwargs)
+
     # decorator called as function, eg: @step()
     def wrapper(func=None):
         return Step(handler=func, *args, **kwargs)

@@ -1,3 +1,4 @@
+from typing import cast
 from pydantic import BaseModel
 from playground.services import IQueue
 from playground.providers import CloudProvider
@@ -21,19 +22,19 @@ def demo_injection(
     print(f" - {queue=}")
     print(f" - {secret_1=}")
     print(f" - {secret_2=}")
-    return data_in
+    return cast(Output, data_in)
 
 
-@step
+@step()
 def make_knight(data_in: Input) -> Output:
     data_in.name = f"Sir {data_in.name}"
-    return data_in
+    return cast(Output, data_in)
 
 
-@step
+@step()
 def make_old(data_in: Input) -> Output:
     data_in.age += 50
-    return data_in
+    return cast(Output, data_in)
 
 
 if __name__ == "__main__":
