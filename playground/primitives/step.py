@@ -1,5 +1,5 @@
 from dataclasses import field, dataclass
-from typing import Any, cast, Callable, Generic, Mapping, Type, TypeVar, Union
+from typing import Any, Callable, Generic, Mapping, Type, TypeVar, Union
 
 from kink import inject, di
 from pydantic import BaseModel
