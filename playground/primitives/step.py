@@ -20,10 +20,12 @@ class Step(Generic[Input, Output]):
         """
         Inject dependencies & execute step.
         """
+        # TODO: How can load Pydantic model from JSON-dict input?
         for key, value in self.deps.items():
             di[key] = value
         prepped_handler = inject(self.handler)
         return prepped_handler(input)
+        # TODO: How can we export back to JSON-dict?
 
     def lambda_handler(self, event, context):
         """
