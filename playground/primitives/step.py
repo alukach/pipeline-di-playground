@@ -35,12 +35,16 @@ class Step(Generic[Input, Output]):
         return self(event)
 
 
-def step(*args, **kwargs) -> Callable[..., Step]:
+def step(func=None, *args, **kwargs) -> Callable[..., Step]:
     """
     Decorator to create Step object from func
     """
-
-    def wrapper(func):
+    # decorator not called as function, eg: @step
+    if func:
+        return Step(handler=func, *args, **kwargs)
+    
+    # decorator called as function, eg: @step()
+    def wrapper(func=None):
         return Step(handler=func, *args, **kwargs)
 
     return wrapper
