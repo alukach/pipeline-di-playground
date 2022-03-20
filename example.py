@@ -1,6 +1,6 @@
 from typing import cast
 from pydantic import BaseModel
-from playground.services import IQueue
+from playground.services import IQueue, ISecret
 from playground.providers import CloudProvider
 from playground.primitives import step, Pipeline
 
@@ -14,7 +14,12 @@ class Output(Input):
     ...
 
 
-@step(deps={"secret_1": lambda di: "foo", "secret_2": lambda di: "bar"})
+@step(
+    deps={
+        "secret_1": lambda di: di[ISecret].get("foo"),
+        "secret_2": lambda di: di[ISecret].get("bar"),
+    }
+)
 def demo_injection(
     data_in: Input, queue: IQueue, secret_1: str, secret_2: str, env: CloudProvider
 ) -> Output:

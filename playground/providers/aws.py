@@ -1,12 +1,13 @@
 from datetime import timedelta
+from typing import Sequence, TypeVar, cast
 import json
 
 import boto3
 from kink import inject
 
 from ..services.queue import IQueue
+from ..services.secret import ISecret
 
-from typing import Sequence, TypeVar
 
 T = TypeVar("T")
 
@@ -31,3 +32,10 @@ class SqsQueue(IQueue[T]):
     def time_since_first_item(self) -> timedelta:
         # TODO: Make work...
         return timedelta(seconds=-1)
+
+
+@inject(alias=ISecret)
+class SecretsManager(ISecret[T]):
+    def get(self, key: str) -> T:
+        # TODO: Make work...
+        return cast(T, f"Let's pretend we just loaded '{key}' from SecretsManager")
