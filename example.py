@@ -25,13 +25,13 @@ def demo_injection(
     return cast(Output, data_in)
 
 
-@step()
+@step
 def make_knight(data_in: Input) -> Output:
     data_in.name = f"Sir {data_in.name}"
     return cast(Output, data_in)
 
 
-@step()
+@step
 def make_old(data_in: Input) -> Output:
     data_in.age += 50
     return cast(Output, data_in)
