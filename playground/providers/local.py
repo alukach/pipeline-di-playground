@@ -4,7 +4,7 @@ from typing import Sequence, TypeVar
 
 from kink import inject
 
-from ..interfaces.queue import IQueue
+from ..services.queue import IQueue
 
 
 T = TypeVar("T")

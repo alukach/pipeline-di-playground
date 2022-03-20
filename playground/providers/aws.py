@@ -1,9 +1,10 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 import json
+
 import boto3
 from kink import inject
 
-from ..interfaces.queue import IQueue
+from ..services.queue import IQueue
 
 from typing import Sequence, TypeVar
 
