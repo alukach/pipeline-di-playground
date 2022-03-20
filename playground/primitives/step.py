@@ -7,18 +7,18 @@ from pydantic import BaseModel
 from playground.providers import CloudProvider, bootstrap
 
 
-Input_co = TypeVar("Input_co", contravariant=True, bound=BaseModel)
+Input = TypeVar("Input", contravariant=True, bound=BaseModel)
 Output = TypeVar("Output", covariant=True, bound=BaseModel)
 
 
 @dataclass
-class Step(Generic[Input_co, Output]):
-    handler: Callable[[Input_co], Output]
+class Step(Generic[Input, Output]):
+    handler: Callable[[Input], Output]
     deps: Mapping[Union[str, Type], Any] = field(default_factory=dict)
 
-    def __call__(self, input: Input_co) -> Output:
+    def __call__(self, input: Input) -> Output:
         """
-        Inject dependencies and then executes step.
+        Inject dependencies & execute step.
         """
         for key, value in self.deps.items():
             di[key] = value
