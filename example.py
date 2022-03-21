@@ -21,6 +21,7 @@ class Output(Input):
         "secret_1": lambda di: di[ISecret].get(di["secret_1_arn"]),
         "secret_2": lambda di: di[ISecret].get(di["secret_2_arn"]),
     },
+    aws_lambda_properties={"memory": 3024, "timeout": 180},
 )
 def demo_injection(
     data_in: Input, queue: IQueue, secret_1: str, secret_2: str, env: CloudProvider

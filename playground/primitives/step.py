@@ -16,6 +16,7 @@ Output = TypeVar("Output", covariant=True, bound=BaseModel)
 class Step(Generic[Input, Output]):
     handler: Callable[[Input], Output]
     deps: Mapping[Union[str, Type], Any] = field(default_factory=dict)
+    aws_lambda_properties: Mapping[str, Any] = field(default_factory=dict)
 
     def __call__(self, input: Input) -> Output:
         """
