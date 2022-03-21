@@ -2,12 +2,19 @@ from dataclasses import dataclass
 import os
 
 
+class UnsetEnvVar(Exception):
+    ...
+
 @dataclass
 class EnvVar:
     """
     A dependency on an environment variable.
     """
-    var_name: str
+    name: str
 
-    def resolve(self):
-        return os.environ[self.var_name]
+    @property
+    def value(self):
+        try:
+            return os.environ[self.name]
+        except KeyError:
+            raise UnsetEnvVar(f"The following environment variable was unset: {self.name}")

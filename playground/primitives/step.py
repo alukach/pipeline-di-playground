@@ -27,7 +27,7 @@ class Step(Generic[Input, Output]):
 
             # Resolve env vars
             if isinstance(value, EnvVar):
-                value = value.resolve()
+                value = value.value
 
             di[key] = value
         prepped_handler = inject(self.handler)
