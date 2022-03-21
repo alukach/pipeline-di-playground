@@ -2,7 +2,7 @@ from typing import cast
 from pydantic import BaseModel
 from playground.services import IQueue, ISecret
 from playground.providers import CloudProvider
-from playground.primitives import step, Pipeline
+from playground.primitives import step, Pipeline, EnvVar
 
 
 class Input(BaseModel):
@@ -16,9 +16,11 @@ class Output(Input):
 
 @step(
     deps={
-        "secret_1": lambda di: di[ISecret].get("foo"),
-        "secret_2": lambda di: di[ISecret].get("bar"),
-    }
+        "secret_1_arn": EnvVar("SECRET_1_ARN"),
+        "secret_2_arn": EnvVar("SECRET_2_ARN"),
+        "secret_1": lambda di: di[ISecret].get(di["secret_1_arn"]),
+        "secret_2": lambda di: di[ISecret].get(di["secret_2_arn"]),
+    },
 )
 def demo_injection(
     data_in: Input, queue: IQueue, secret_1: str, secret_2: str, env: CloudProvider

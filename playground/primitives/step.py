@@ -4,7 +4,8 @@ from typing import Any, Callable, Generic, Mapping, Type, TypeVar, Union
 from kink import inject, di
 from pydantic import BaseModel
 
-from playground.providers import CloudProvider, bootstrap
+from ..primitives.env_var import EnvVar
+from ..providers import CloudProvider, bootstrap
 
 
 Input = TypeVar("Input", contravariant=True, bound=BaseModel)
@@ -22,6 +23,11 @@ class Step(Generic[Input, Output]):
         """
         # TODO: How can load Pydantic model from JSON-dict input?
         for key, value in self.deps.items():
+
+            # Resolve env vars
+            if isinstance(value, EnvVar):
+                value = value.resolve()
+
             di[key] = value
         prepped_handler = inject(self.handler)
         return prepped_handler(input)
