@@ -12,16 +12,14 @@ Output = TypeVar("Output", covariant=True, bound=BaseModel)
 
 @dataclass
 class Pipeline(Generic[Input, Output]):
-    env: CloudProvider
     steps: Sequence[Step]
-
-    def __post_init__(self):
-        bootstrap(self.env)
 
     def run(self, input: Input) -> Output:
         """
         Local execution of a pipeline
         """
+        bootstrap(CloudProvider.local)
+
         output = input
         for step in self.steps:
             output = step(output)

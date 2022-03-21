@@ -45,9 +45,9 @@ def make_old(data_in: Input) -> Output:
     return cast(Output, data_in)
 
 
+pipeline = Pipeline[Input, Output](steps=[demo_injection, make_knight, make_old])
+
+
 if __name__ == "__main__":
-    p = Pipeline[Input, Output](
-        env=CloudProvider.local, steps=[demo_injection, make_knight, make_old]
-    )
-    output = p.run(Input(name="Ringo Star", age=24))
+    output = pipeline.run(Input(name="Ringo Star", age=24))
     print(f"{output=}")
