@@ -23,7 +23,7 @@ class Output(Input):
     },
     aws_lambda_properties={"memory": 3024, "timeout": 180},
 )
-def demo_injection(
+def kitchen_sink(
     data_in: Input, queue: IQueue, secret_1: str, secret_2: str, env: CloudProvider
 ) -> Output:
     print("Dependency resolutions:")
@@ -46,7 +46,9 @@ def make_old(data_in: Input) -> Output:
     return cast(Output, data_in)
 
 
-pipeline = Pipeline[Input, Output](steps=[demo_injection, make_knight, make_old])
+pipeline = Pipeline[Input, Output](
+    name="Example Pipeline", steps=[kitchen_sink, make_knight, make_old]
+)
 
 
 if __name__ == "__main__":

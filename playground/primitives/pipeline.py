@@ -12,6 +12,7 @@ Output = TypeVar("Output", covariant=True, bound=BaseModel)
 
 @dataclass
 class Pipeline(Generic[Input, Output]):
+    name: str
     steps: Sequence[Step]
 
     def run(self, input: Input) -> Output:
